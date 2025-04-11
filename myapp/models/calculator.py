@@ -6,19 +6,19 @@ class Person:
     Attributes:
         weight (float): Person's weight.
         height (int): Person's height.
-        year (int): Birth year of the person.
+        age (int): Age of the person.
         sex (str): Sex of the person; m to male, f to female.
         activity (float): Activity level of the person. 
         goal (str): Goal of the person; 'cutting', 'bulking' or 'maintenance'.
     """
-    def __init__(self, *args, activity=None, weight=None, height=None, year=None, sex=None, goal="manutenção"):
-        if None in [activity, weight, height, year, sex]:
+    def __init__(self, *args, activity=None, weight=None, height=None, age=None, sex=None, goal="manutenção"):
+        if None in [activity, weight, height, age, sex]:
             raise ValueError("Todos os campos precisam ser preenchidos!")   
 
         self.activity = activity
         self.weight = weight
         self.height = height
-        self.year = year
+        self.age = age
         self.sex = sex
         self.goal = goal
 
@@ -31,9 +31,9 @@ class Person:
 
         """
         if self.sex.lower()== 'm':
-            return round(self.activity * (66 + (13.7 * self.weight) + (5 * self.height) - (6.8 * self.year)))
+            return round(self.activity * (66 + (13.7 * self.weight) + (5 * self.height) - (6.8 * self.age)))
         else:
-            return round(self.activity * (655 + (9.6 * self.weight) + (1.8 * self.height) - (4.7 * self.year)))
+            return round(self.activity * (655 + (9.6 * self.weight) + (1.8 * self.height) - (4.7 * self.age)))
 
     def water_calc(self):
         """
@@ -43,11 +43,11 @@ class Person:
             int: The calculated mls of water required.
 
         """
-        if 17 >= self.year:
+        if 17 >= self.age:
             return self.weight * 40, 2
-        elif 18 <= self.year <= 55:
+        elif 18 <= self.age <= 55:
             return self.weight * 35
-        elif 56 <= self.year <= 65:
+        elif 56 <= self.age <= 65:
             return self.weight * 30
         else:
             return self.weight * 25

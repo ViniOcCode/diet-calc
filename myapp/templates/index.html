@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}<h1>Calcule sua dieta</h1>{% endblock %}
+
+{% block content %}
+    <form method="POST" id="calcForm">
+        <label>Peso (kg):</label>
+        <input type="number" name="weight" step="0.1" required><br>
+
+        <label>Altura (cm):</label>
+        <input type="number" name="height" required><br>
+
+        <label>Idade:</label>
+        <input type="number" name="age" required><br>
+
+        <label>Sexo:</label>
+        <input type="radio" id="homem" name="sex" value="m" required><br>
+        <label for="homem">Homem</label><br>
+
+        <input type="radio" id="mulher" name="sex" value="f"><br>
+        <label for="mulher">Mulher</label><br>
+
+        <label for="activity">Nível de Atividade:</label>
+        <select name="activity" id="activity" required>
+            <option value="1.2">Sedentários (pouco ou nenhum exercício)</option>
+            <option value="1.375">Levemente ativo (exercício leve 1 a 3 dias/semana)</option>
+            <option value="1.55">Moderadamente ativo (exercício moderado 3 a 5 dias/semana)</option>
+            <option value="1.725">Altamente ativo (exercício pesado 5 a 6 dias/semana)</option>
+            <option value="1.9">Extremamente ativo (exercício pesado diário ou 2x/dia)</option>
+        </select><br>
+
+        <label>Objetivo</label>
+        <select name="goal">
+            <option value="manutenção">Manutenção</option>
+            <option value="cutting">Cutting</option>
+            <option value="bulking">Bulking</option>
+        </select>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+        {% if result %}
+            <div>
+                <h1>Resultados</h1>
+
+                    <p><strong>Taxa Metabólica Basal: </strong>{{ result['tmb'] }} kcal</p>
+                    <p><strong>Água:</strong> {{ result['water'] }} ml</p>
+
+                    <h2>Macronutrientes</h2>
+                <ul>
+                    <li>Proteínas: {{ result['nutrients']['proteins'] }} g</li>
+                    <li>Gorduras: {{ result['nutrients']['fat'] }} g</li>
+                    <li>Carboidratos: {{ result['nutrients']['carbs'] }} g</li>
+                </ul>
+            </div>
+        {% endif %}
+{% endblock %}

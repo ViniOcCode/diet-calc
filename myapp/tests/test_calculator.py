@@ -1,5 +1,5 @@
 import pytest
-from app.models.calculator import Person
+from myapp.models.calculator import Person
 
 @pytest.fixture
 def persons():
@@ -44,8 +44,8 @@ def test_water_calc(persons):
 def test_summary(persons):
 
     p, p2, p3 = persons
-    assert p.summary()["tmb"] == 2706
-    assert p2.summary()["tmb"] == 2141
-    assert p3.summary()["tmb"] == 2106
+    assert p.summary('manuntenção')["tmb"] == 2706
+    assert p2.summary('manuntenção')["tmb"] == 2141
+    assert p3.summary('cutting')["tmb"] == 2106
 
 
