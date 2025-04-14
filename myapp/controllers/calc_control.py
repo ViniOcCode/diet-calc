@@ -8,19 +8,24 @@ calc_control = Blueprint("calc_control", __name__)
 def calculate():
     result = None
     data =  request.form
+
     if request.method == 'POST':
-        person = Person(
-            weight=float(data["weight"]),
-            height=float(data["height"]),
-            age=int(data["age"]),
-            sex=data["sex"],
-            activity=float(data["activity"]),
-            goal=str(data["goal"])
-        )
-        print(data["age"])
-        print(data["sex"])
-        print(data["activity"])
-        print(data["goal"])
+        try:
+            person = Person(
+                weight=float(data["weight"]),
+                height=float(data["height"]),
+                age=int(data["age"]),
+                gender=data["gender"],
+                activity=float(data["activity"]),
+                goal=str(data["goal"])
+            )
+        except ValueError as e:
+            return str(e), 400
+        else:
+            print(data["age"])
+            print(data["gender"])
+            print(data["activity"])
+            print(data["goal"])
         result = person.summary()
 
     return render_template("index.html", result=result)

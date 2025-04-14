@@ -1,6 +1,8 @@
-{% extends "base.html" %} {% block title %}<h1>Calcule sua dieta</h1>{% endblock %}
+{% extends "base.html" %} {% block title %}Calcule sua dieta{% endblock %}
 
 {% block content %}
+    <h1>Calcule sua dieta, àgua e Macronutrientes!</h1>
+
     <form method="POST" id="calcForm">
         <label>Peso (kg):</label>
         <input type="number" name="weight" step="0.1" required><br>
@@ -12,10 +14,10 @@
         <input type="number" name="age" required><br>
 
         <label>Sexo:</label>
-        <input type="radio" id="homem" name="sex" value="m" required><br>
+        <input type="radio" id="homem" name="gender" value="m" required><br>
         <label for="homem">Homem</label><br>
 
-        <input type="radio" id="mulher" name="sex" value="f"><br>
+        <input type="radio" id="mulher" name="gender" value="f"><br>
         <label for="mulher">Mulher</label><br>
 
         <label for="activity">Nível de Atividade:</label>
