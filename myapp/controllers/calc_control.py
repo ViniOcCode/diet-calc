@@ -21,10 +21,10 @@ def calculate():
                 goal=str(data["goal"])
             )
         except ValueError as e:
-            return str(e), 400
+            return render_template("index.html", error=str(e), result=result, data=data)
         else:
             goal = str(data["goal"]) 
        
         result = person.summary()
 
-    return render_template("index.html", goal=goal, result=result)
+    return render_template("index.html", goal=goal, result=result, data=data)

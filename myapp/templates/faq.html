@@ -1,5 +1,76 @@
 {% extends 'base.html' %} {% block title %}Sobre{% endblock %}
 
 {% block content %}
-<h1>teste</h1>
+<div class="container p-4 mt-2 bg-white text-black rounded border">
+    <div class="m-5">
+        <h3 class="border-bottom p-2">FAQ - Perguntas Frequentes</h3>
+
+        <div class="accordion p-2" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                        Como os cálculos são feitos?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Utilizamos fórmulas como Mifflin-St Jeor ou Harris-Benedict para estimar seu gasto calórico diário.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Preciso me cadastrar para usar o site?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Não. O uso é livre, direto ao ponto e sem necessidade de login ou cadastro.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                        Os resultados são precisos?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Os resultados são estimativas com base em fórmulas padrão. Para algo mais preciso, consulte um profissional de saúde.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                        Posso usar isso pra montar minha dieta?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        O site serve como base informativa. Para um plano alimentar completo e personalizado, procure um nutricionista.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
+                        Como interpreto o valor final?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        O número final representa a estimativa de calorias que você gasta por dia. Use esse valor como base para ajustar sua alimentação.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

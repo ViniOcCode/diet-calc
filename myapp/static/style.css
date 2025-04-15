@@ -1,0 +1,69 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+.bg-protein {
+  background-color: #A7C7E7;
+}
+.bg-carbs {
+  background-color: #B8E2C8;
+}
+.bg-fat {
+  background-color: #FDD7AA;
+}
+.bg-navbar {
+  background-color: #A7C7E7;
+}
+
+a.navbar-brand {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+a.navbar-brand span {
+  font-weight: bold;
+}
+
+.navbar {
+    height: 55px;
+}
+
+.navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #0057b3a8;
+    color: white;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: #f8f9fa; 
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+    border-radius: 0.5rem;
+  } 
+
+  .navbar-collapse.show {
+    max-height: 500px; 
+    transition: max-height 0.3s ease;
+  }
+}
+
+.error {
+  background-color: #ffe5e5;
+  color: #b30000;
+  border: 1px solid #ff0000;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+

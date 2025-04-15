@@ -1,5 +1,40 @@
 {% extends 'base.html' %} {% block title %}Sobre{% endblock %}
 
 {% block content %}
-<h1>teste</h1>
+<div class="container p-4 mt-2 bg-white text-black rounded border">
+    <div class="m-5">
+        <h3 class="border-bottom p-2">Propósito</h3>
+        <p class="p-4">
+            Este site foi criado para ajudar você a calcular facilmente o gasto diário de calorias com base em seu estilo de
+            vida, idade, peso, altura e nível de atividade física.
+        </p>
+    </div>
+
+    <div class="m-5">
+        <h3 class="border-bottom p-2">Como funciona</h3>
+        <p class="p-4">
+            Utilizamos fórmulas consagradas como Mifflin-St Jeor ou Harris-Benedict para estimar seu metabolismo basal (BMR),
+            ajustando pelo seu nível de atividade.
+        </p>
+    </div>
+
+    <div class="m-5">
+        <h3 class="border-bottom p-2">Para quem é</h3>
+        <p class="p-4">
+            Ideal para quem está começando a cuidar da saúde, atletas amadores, ou quem quer entender melhor o próprio corpo.
+        </p>
+    </div>
+
+    <div class="m-5">
+        <div class="border-bottom p-2 mb-2">
+            <h3 class="text-danger fw-bold fs-3">⚠️ ATENÇÃO</h3>
+        </div>
+        <p class="p-4 fs-5 fw-bold">
+            Este site não substitui orientação profissional. Consulte um nutricionista para um plano personalizado.
+        </p>
+    </div>
+
+    <p class="text-muted small text-center">Desenvolvido por Vinicius, um entusiasta de programação.</p>
+</div>
+
 {% endblock %}
