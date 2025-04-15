@@ -7,6 +7,7 @@ calc_control = Blueprint("calc_control", __name__)
 @calc_control.route('/', methods=['GET', 'POST'])
 def calculate():
     result = None
+    goal = None
     data =  request.form
 
     if request.method == 'POST':
@@ -22,10 +23,8 @@ def calculate():
         except ValueError as e:
             return str(e), 400
         else:
-            print(data["age"])
-            print(data["gender"])
-            print(data["activity"])
-            print(data["goal"])
+            goal = str(data["goal"]) 
+       
         result = person.summary()
 
-    return render_template("index.html", result=result)
+    return render_template("index.html", goal=goal, result=result)

@@ -1,57 +1,124 @@
-{% extends "base.html" %} {% block title %}Calcule sua dieta{% endblock %}
+{% extends "base.html" %}
+{% block title %}Calcule sua dieta{% endblock %}
 
 {% block content %}
-    <h1>Calcule sua dieta, àgua e Macronutrientes!</h1>
 
-    <form method="POST" id="calcForm">
-        <label>Peso (kg):</label>
-        <input type="number" name="weight" step="0.1" required><br>
+<div class="container mt-5 bg-white text-black p-4 rounded border">
+    <h2 class="mb-4 text-center">Calcule seu gasto diário, água e macronutrientes!</h2>
+    <p class="text-center">Está calculadora cálcula sua <strong>Taxa Metabólica Basal</strong>, uma medida para saber o quanto você gasta de energia por dia! Este também vai
+        mostrar o quanto você precisa de <strong>água e macronutrientes por dia, e também seu Indíce Corporal!</strong>
+    </p>
 
-        <label>Altura (cm):</label>
-        <input type="number" name="height" required><br>
+    <form method="POST" class="row">
+        <div class="col-12 mb-3">
+            <label class="form-label">Sexo:</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="homem" name="gender" value="m" required>
+                <label class="form-check-label" for="homem">Homem</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="mulher" name="gender" value="f">
+                <label class="form-check-label" for="mulher">Mulher</label>
+            </div>
+        </div>
 
-        <label>Idade:</label>
-        <input type="number" name="age" required><br>
+        <div class="col-12 mb-3">
+            <label for="weight" class="form-label">Peso:</label>
+            <input type="text" inputmode="numeric" pattern="[0-9]*" name="weight" class="form-control" id="weight"
+                style="width:60px;" maxlength="3" placeholder="kg" required>
+        </div>
 
-        <label>Sexo:</label>
-        <input type="radio" id="homem" name="gender" value="m" required><br>
-        <label for="homem">Homem</label><br>
+        <div class="col-12 mb-3">
+            <label for="height" class="form-label">Altura:</label>
+            <input type="text" inputmode="numeric" pattern="[0-9]*" name="height" class="form-control" id="height"
+                style="width:100px;" maxlength="3" placeholder="cm" required>
+        </div>
 
-        <input type="radio" id="mulher" name="gender" value="f"><br>
-        <label for="mulher">Mulher</label><br>
+        <div class="col-12 mb-3">
+            <label for="age" class="form-label">Idade:</label>
+            <input type="text" inputmode="numeric" pattern="[0-9]*" name="age" class="form-control" id="age"
+                style="width:60px;" maxlength="3" required>
+        </div>
 
-        <label for="activity">Nível de Atividade:</label>
-        <select name="activity" id="activity" required>
-            <option value="1.2">Sedentários (pouco ou nenhum exercício)</option>
-            <option value="1.375">Levemente ativo (exercício leve 1 a 3 dias/semana)</option>
-            <option value="1.55">Moderadamente ativo (exercício moderado 3 a 5 dias/semana)</option>
-            <option value="1.725">Altamente ativo (exercício pesado 5 a 6 dias/semana)</option>
-            <option value="1.9">Extremamente ativo (exercício pesado diário ou 2x/dia)</option>
-        </select><br>
+        <div class="col-12 mb-3">
+            <label for="activity" class="form-label">Nível de Atividade:</label>
+            <select name="activity" id="activity" class="form-select" required>
+                <option value="1.2">Sedentários (pouco ou nenhum exercício)</option>
+                <option value="1.375">Levemente ativo (exercício leve 1 a 3 dias/semana)</option>
+                <option value="1.55">Moderadamente ativo (exercício moderado 3 a 5 dias/semana)</option>
+                <option value="1.725">Altamente ativo (exercício pesado 5 a 6 dias/semana)</option>
+                <option value="1.9">Extremamente ativo (exercício pesado diário ou 2x/dia)</option>
+            </select>
+        </div>
 
-        <label>Objetivo</label>
-        <select name="goal">
-            <option value="manutenção">Manutenção</option>
-            <option value="cutting">Cutting</option>
-            <option value="bulking">Bulking</option>
-        </select>
+        <div class="col-12 mb-3">
+            <label for="goal" class="form-label">Objetivo:</label>
+            <select name="goal" id="goal" class="form-select">
+                <option value="manutenção">Manutenção</option>
+                <option value="cutting">Cutting</option>
+                <option value="bulking">Bulking</option>
+            </select>
+        </div>
 
-        <button type="submit">Calcular</button>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Calcular</button>
+        </div>
     </form>
 
-        {% if result %}
-            <div>
-                <h1>Resultados</h1>
-
-                    <p><strong>Taxa Metabólica Basal: </strong>{{ result['tmb'] }} kcal</p>
-                    <p><strong>Água:</strong> {{ result['water'] }} ml</p>
-
-                    <h2>Macronutrientes</h2>
-                <ul>
-                    <li>Proteínas: {{ result['nutrients']['proteins'] }} g</li>
-                    <li>Gorduras: {{ result['nutrients']['fat'] }} g</li>
-                    <li>Carboidratos: {{ result['nutrients']['carbs'] }} g</li>
-                </ul>
+    {% if result %}
+    <div class="container my-5 mt-3">
+        <h3 class="pb-2 border-bottom">Resultados</h3>
+        <div class="row text-center g-3">
+            <div class="col-md shadow-sm p-3 bg-white">
+                <p class="text-muted small mb-1">Índice de Peso</p>
+                <h3 class="mb-0">{{ result['bmi']['index'] }}, {{ result['bmi']['health'] }}</h3>
             </div>
-        {% endif %}
+            <div class="col-md shadow-sm p-3 bg-white">
+                <p class="text-muted small mb-1">Calorias de manutenção</p>
+                <h3 class="mb-0">{{ result['bmr']['base'] }} kcal</h3>
+            </div>
+
+            <div class="col-md shadow-sm p-3 bg-white">
+                <p class="text-muted small mb-1">Água</p>
+                <h3 class="mb-0">{{ result['water']['ml'] }} ml ({{ result['water']['l'] }} Litros)</h3>
+            </div>
+
+            {% if goal != 'manutenção' %}
+            <div class="col-md shadow-sm p-3 bg-white">
+                <p class="text-muted small mb-1">Calorias de {{ goal }}</p>
+                <h3 class="mb-0">{{ result['bmr']['goal'] }} kcal</h3>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <h3 class="pb-2 border-bottom">Macronutrientes</h3>
+        <div class="row text-center g-3">
+            <div class="col-md shadow-sm p-3 bg-white">
+                <h3 class="mb-0">{{ result['nutrients']['proteins'] }}g</h3>
+                <p class="text-muted small mb-1"><em>Proteínas</em></p>
+            </div>
+
+            <div class="col-md shadow-sm p-3 bg-white">
+                <h3 class="mb-0">{{ result['nutrients']['fat'] }}g</h3>
+                <p class="text-muted small mb-1"><em>Gorduras</em></p>
+            </div>
+
+            <div class="col-md shadow-sm p-3 bg-white">
+                <h3 class="mb-0">{{ result['nutrients']['carbs'] }}g</h3>
+                <p class="text-muted small mb-1"><em>Carboidratos</em></p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="container mt-5 p-4">
+    <h3>Como é cálculado seu gasto</h3>
+    <p class="small mb-1">Seu gasto diário é uma estimação de quantas calórias você gasta por dia, levando em consideração
+        exercícios físicos. O mesmo é cálculado, descobrindo a sua Taxa Metábolica Basal (TMB), e então, multiplica-se
+        este valor pelo valor de atividade!
+    </p>
+</div>
 {% endblock %}

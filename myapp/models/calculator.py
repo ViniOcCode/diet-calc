@@ -45,16 +45,16 @@ class Person:
             
     def bmr_calc(self):
         """
-        Calculates the basal metabolic rate (BMR) of the person.
+        Calculates the basal metabolic rate (BMR) of the person using Mifflin-St Jeor Equation.
 
         returns:
             int: The calculated BMR
         """
-
+        # Mifflin-St Jeor Equation
         if self.gender.lower() == 'm':
-            return round(self.activity * (66 + (13.7 * self.weight) + (5 * self.height) - (6.8 * self.age)))
+            return round((10 * self.weight + 6.25 * self.height - 5 * self.age) + 5)
         elif self.gender.lower() == 'f':
-            return round(self.activity * (655 + (9.6 * self.weight) + (1.8 * self.height) - (4.7 * self.age)))
+            return round((10 * self.weight + 6.25 * self.height - 5 * self.age) + -151)
         else:
             raise ValueError("Given gender is not compatible yet.")
 
@@ -67,7 +67,7 @@ class Person:
         """
 
         if 17 >= self.age:
-            return self.weight * 40, 2
+            return self.weight * 40
         elif 18 <= self.age <= 55:
             return self.weight * 35
         elif 56 <= self.age <= 65:
@@ -76,37 +76,38 @@ class Person:
             return self.weight * 25
     
     def bmi_calc(self):
-        bmi = self.weight/(self.height * self.height)   
+        height = self.height / 100 
+        bmi = round(self.weight/(height * height))
 
         if bmi < 18.5:
-            return bmi, "Underweight"
+            return bmi, "Muito magro"
         elif 18.6 < bmi < 24.9:
-            return bmi, "Healthy weight"
+            return bmi, "Peso ideal"
         elif 25 < bmi < 29.9:
-            return bmi, "Overweight"
+            return bmi, "Sobrepeso"
         elif bmi > 30:
             if 30 < bmi < 34.5:
-                return bmi, "Obesity class 1"
+                return bmi, "Obesidade Nível 1"
             elif 35 < bmi < 39.9:
-                return bmi, "Obesity class 2"
+                return bmi, "Obesidade Nível 2"
             else:
-                return bmi, "Obesity class 3"
+                return bmi, "Obesidade Nível 3"
     
     def macros_calc(self):
-        base = self.bmr_calc()
+        goal = self.bmr_calc()
         if self.goal == 'cutting':
-            base -= 600
+            goal -= 600
             protein = self.weight * 2.0
         elif self.goal == 'bulking': 
-            base += 600
+            goal += 600
             protein = self.weight * 1.8
         else:
             protein = self.weight * 1.6
         
-        fat = (base * 0.25) / 9
-        carbs = (base - (protein * 4 + fat * 9)) / 4
+        fat = (goal * 0.25) / 9
+        carbs = (goal - (protein * 4 + fat * 9)) / 4
 
-        return base, protein, fat, carbs
+        return goal, protein, fat, carbs
 
     def summary(self):
         """
@@ -115,7 +116,9 @@ class Person:
         returns:
             dict: returns a dict with nutrients (proteins, fat and carbs), water and brm needed.
         """
-        base, protein, fat, carbs = self.macros_calc()
+        goal, protein, fat, carbs = self.macros_calc()
+
+        index, health = self.bmi_calc()
 
         return { 
             "nutrients": {
@@ -123,8 +126,18 @@ class Person:
                 "fat": round(fat, 2),
                 "carbs": round(carbs, 2)
             },
-            "bmr_goal": base,
-            "water": self.water_calc(),
-            "bmr_base": self.bmr_calc(),
-            "bmi": self.bmi_calc()
+
+            "bmr":{
+                "base": self.bmr_calc(),
+                "goal": goal
+            },
+
+            "water": {
+                "ml": self.water_calc(),
+                "l": round((self.water_calc() / 1000), 2)
+            },
+            "bmi": {
+                "index": index,
+                "health":  health
+            }
         }
