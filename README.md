@@ -9,6 +9,9 @@
 
 Esses cálculos consideram seu nível de atividade física e objetivo (manutenção, bulking ou cutting).
 
+Você pode dar uma olhada nele aqui: https://diet-calc.onrender.com
+
+![Site](https://imgur.com/rVuEOvp.png)
 ---
 
 ## 🌟 Objetivo
