@@ -9,6 +9,9 @@
 
 Esses cálculos consideram seu nível de atividade física e objetivo (manutenção, bulking ou cutting).
 
+Você pode dar uma olhada nele aqui: https://diet-calc.onrender.com
+
+![Site](https://imgur.com/rVuEOvp.png)
 ---
 
 ## 🌟 Objetivo
@@ -54,7 +57,7 @@ Ao enviar o formulário, os seguintes dados são exibidos:
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/usuario/projeto.git
+git clone https://github.com/ViniOcCode/diet-calc.git
 cd projeto
 ```
 
@@ -136,7 +139,7 @@ Once the form is submitted, the following results are displayed:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/usuario/projeto.git
+git clone https://github.com/ViniOcCode/diet-calc.git
 cd projeto
 ```
 
