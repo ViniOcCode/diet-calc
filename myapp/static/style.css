@@ -67,3 +67,9 @@ a.navbar-brand span {
   font-weight: bold;
 }
 
+a.text-blue {
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  color: #0057b3a8; 
+}
