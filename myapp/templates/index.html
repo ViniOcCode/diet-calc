@@ -66,9 +66,9 @@
         <div class="col-12 mb-3">
             <label for="goal" class="form-label">Objetivo:</label>
             <select name="goal" id="goal" class="form-select">
-                <option value="manutenção">Manutenção</option>
-                <option value="cutting">Cutting</option>
-                <option value="bulking">Bulking</option>
+                <option value="manutenção">Manter peso</option>
+                <option value="cutting">Perder peso</option>
+                <option value="bulking">Ganhar peso</option>
             </select>
         </div>
 
@@ -116,7 +116,7 @@
 
             {% if goal != 'manutenção' %}
             <div class="col-md shadow-sm p-3 bg-white">
-                <p class="text-muted small mb-1">Calorias de {{ goal }}</p>
+                <p class="text-muted small mb-1">Calorias para {{ goal }}</p>
                 <h3 class="mb-0">{{ result['bmr']['goal'] }} kcal</h3>
                 <p class="mt-2">Com seu gasto diário definido, podemos calcular um objetivo escolhido por você, sendo estas,
                     as calorias que você precisaria consumir, <strong>em estimativa</strong>, para chegar lá!</p>
