@@ -13,18 +13,8 @@
 
     {{ quick_form(form, action=url_for('main.calculate'), novalidate=True) }}
 
-    {% if result %}
-    <div class="mt-4">
-        <h3>Resultados</h3>
-        <p>IMC: {{ result['bmi']['index'] }} ({{ result['bmi']['health'] }})</p>
-        <p>Calorias base: {{ result['bmr']['base'] }} kcal</p>
-        <p>Calorias objetivo: {{ result['bmr']['goal'] }} kcal</p>
-        <p>Água: {{ result['water']['ml'] }} ml ({{ result['water']['l'] }} L)</p>
-        <p>Proteínas: {{ result['nutrients']['proteins'] }} g</p>
-        <p>Gorduras: {{ result['nutrients']['fat'] }} g</p>
-        <p>Carbs: {{ result['nutrients']['carbs'] }} g</p>
-    </div>
-    {% endif %}
+    {% include 'results.html' %}
+
 </div>
 
 <div class="container mt-5 p-4">

@@ -11,8 +11,8 @@ def calculate():
     result = None
 
     if form.validate_on_submit():
-        goal = form.goal.data
         try:
+            goal = form.goal.data
             person = Person(
                 weight=form.weight.data,
                 height=form.height.data,
@@ -25,7 +25,7 @@ def calculate():
         except ValidationError as e:
             form.errors["validation"] = [str(e)]
 
-    return render_template("index.html", goal=goal, form=form, result=result)
+    return render_template("index.html", form=form, result=result)
 
 
 @bp.route('/about')

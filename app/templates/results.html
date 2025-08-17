@@ -1,0 +1,218 @@
+{% if result %}
+<!-- Seção de Resultados Principal -->
+<div class="results-container mt-4">
+    <div class="results-header">
+        <h3 class="results-title">
+            <span class="results-icon">📊</span>
+            Seus Resultados Personalizados
+        </h3>
+        <p class="results-subtitle">Análise completa baseada nos seus dados pessoais</p>
+    </div>
+
+    <!-- Cards de Resultados -->
+    <div class="results-grid">
+        <!-- Card IMC -->
+        <div class="result-card imc-card">
+            <div class="card-header">
+                <span class="card-icon">⚖️</span>
+                <h4>Índice de Massa Corporal</h4>
+            </div>
+            <div class="card-content">
+                <div class="main-value">{{ result['bmi']['index'] }}</div>
+                <div class="status-badge status-{{ result['bmi']['health'].lower().replace(' ', '-') }}">
+                    {{ result['bmi']['health'] }}
+                </div>
+                
+                <!-- Tabela de referência IMC -->
+                <div class="reference-table">
+                    <h5>Tabela de Referência:</h5>
+                    <div class="imc-ranges">
+                        <div class="range-item {% if result['bmi']['index'] < 18.5 %}active{% endif %}">
+                            <span class="range">< 18.5</span>
+                            <span class="label">Abaixo do peso</span>
+                        </div>
+                        <div class="range-item {% if 18.5 <= result['bmi']['index'] < 25 %}active{% endif %}">
+                            <span class="range">18.5 - 24.9</span>
+                            <span class="label">Peso ideal</span>
+                        </div>
+                        <div class="range-item {% if 25 <= result['bmi']['index'] < 30 %}active{% endif %}">
+                            <span class="range">25.0 - 29.9</span>
+                            <span class="label">Sobrepeso</span>
+                        </div>
+                        <div class="range-item {% if result['bmi']['index'] >= 30 %}active{% endif %}">
+                            <span class="range">≥ 30.0</span>
+                            <span class="label">Obesidade</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Calorias Base -->
+        <div class="result-card calories-card">
+            <div class="card-header">
+                <span class="card-icon">🔥</span>
+                <h4>Calorias de Manutenção</h4>
+            </div>
+            <div class="card-content">
+                <div class="main-value">{{ result['bmr']['base'] }} <span class="unit">kcal</span></div>
+                <div class="description">
+                    <p>Baseado na <strong>fórmula Mifflin-St Jeor</strong> ajustada pelo seu nível de atividade física.</p>
+                    <p>Este é o gasto energético diário que seu corpo precisa para manter o peso atual.</p>
+                </div>
+                <div class="info-badge">
+                    <span class="badge-icon">ℹ️</span>
+                    Gasto diário base
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Calorias Objetivo (só aparece se não for manutenção) -->
+        {% if goal != 'maintenance' %}
+        <div class="result-card goal-card">
+            <div class="card-header">
+                <span class="card-icon">🎯</span>
+                <h4>Calorias para 
+                    {% if goal == 'cutting' %}Perder Peso
+                    {% elif goal == 'bulking' %}Ganhar Peso
+                    {% endif %}
+                </h4>
+            </div>
+            <div class="card-content">
+                <div class="main-value">{{ result['bmr']['goal'] }} <span class="unit">kcal</span></div>
+                <div class="description">
+                    <p>Baseado no seu objetivo de 
+                        {% if goal == 'cutting' %}<strong>emagrecimento</strong>
+                        {% elif goal == 'bulking' %}<strong>ganho de peso</strong>
+                        {% endif %}.
+                    </p>
+                    <p>Este é o valor <strong>estimado</strong> de calorias que você deve consumir diariamente.</p>
+                </div>
+                <div class="goal-indicator goal-{{ goal }}">
+                    {% if goal == 'cutting' %}
+                        <span>📉 Déficit calórico</span>
+                    {% elif goal == 'bulking' %}
+                        <span>📈 Superávit calórico</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Card Hidratação -->
+        <div class="result-card water-card">
+            <div class="card-header">
+                <span class="card-icon">💧</span>
+                <h4>Hidratação Diária</h4>
+            </div>
+            <div class="card-content">
+                <div class="main-value">{{ result['water']['l'] }} <span class="unit">Litros</span></div>
+                <div class="sub-value">{{ result['water']['ml'] }} ml</div>
+                <div class="description">
+                    <p>A <strong>hidratação adequada</strong> é fundamental para o bom funcionamento do organismo.</p>
+                    <p>Manter-se hidratado previne a retenção de líquidos e otimiza o metabolismo.</p>
+                </div>
+                <div class="hydration-tips">
+                    <small>💡 Dica: Distribua ao longo do dia para melhor absorção</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Macronutrientes -->
+    <div class="macros-section">
+        <div class="section-header">
+            <h3 class="section-title">
+                <span class="section-icon">🥗</span>
+                Distribuição de Macronutrientes
+            </h3>
+            <p class="section-subtitle">
+                Baseado na dieta balanceada (30% proteínas, 35% gorduras, 35% carboidratos)
+            </p>
+        </div>
+
+        <div class="macros-grid">
+            <!-- Proteínas -->
+            <div class="macro-card protein-card">
+                <div class="macro-icon">🥩</div>
+                <div class="macro-content">
+                    <div class="macro-value">{{ result['nutrients']['proteins'] }}g</div>
+                    <div class="macro-name">Proteínas</div>
+                    <div class="macro-percentage">30%</div>
+                    <div class="macro-info">
+                        <small>Essencial para músculos e tecidos</small>
+                    </div>
+                </div>
+                <div class="macro-bar">
+                    <div class="macro-fill protein-fill" style="width: 30%"></div>
+                </div>
+            </div>
+
+            <!-- Gorduras -->
+            <div class="macro-card fat-card">
+                <div class="macro-icon">🥑</div>
+                <div class="macro-content">
+                    <div class="macro-value">{{ result['nutrients']['fat'] }}g</div>
+                    <div class="macro-name">Gorduras</div>
+                    <div class="macro-percentage">35%</div>
+                    <div class="macro-info">
+                        <small>Energia e absorção de vitaminas</small>
+                    </div>
+                </div>
+                <div class="macro-bar">
+                    <div class="macro-fill fat-fill" style="width: 35%"></div>
+                </div>
+            </div>
+
+            <!-- Carboidratos -->
+            <div class="macro-card carb-card">
+                <div class="macro-icon">🍞</div>
+                <div class="macro-content">
+                    <div class="macro-value">{{ result['nutrients']['carbs'] }}g</div>
+                    <div class="macro-name">Carboidratos</div>
+                    <div class="macro-percentage">35%</div>
+                    <div class="macro-info">
+                        <small>Energia rápida para o cérebro</small>
+                    </div>
+                </div>
+                <div class="macro-bar">
+                    <div class="macro-fill carb-fill" style="width: 35%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seção Informativa -->
+<div class="info-section">
+    <div class="info-card">
+        <h3 class="info-title">
+            <span class="info-icon">🧮</span>
+            Como Calculamos Seus Resultados
+        </h3>
+        <div class="calculation-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Taxa Metabólica Basal (TMB)</h4>
+                    <p>Calculamos quantas calorias seu corpo gasta em repouso usando a fórmula Mifflin-St Jeor, considerando idade, peso, altura e sexo.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Fator de Atividade</h4>
+                    <p>Multiplicamos a TMB pelo seu nível de atividade física para obter o gasto calórico total diário.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Ajuste para Objetivo</h4>
+                    <p>Aplicamos déficit ou superávit calórico baseado no seu objetivo (perder, manter ou ganhar peso).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
