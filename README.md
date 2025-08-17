@@ -11,7 +11,7 @@ Esses cálculos consideram seu nível de atividade física e objetivo (manutenç
 
 Você pode dar uma olhada nele aqui: https://diet-calc.onrender.com
 
-![Site](https://imgur.com/gallery/new-dietcalc-88klojG#gJj1EvK)
+![Site](https://imgur.com/gJj1EvK.png)
 ---
 
 ## 🌟 Objetivo
