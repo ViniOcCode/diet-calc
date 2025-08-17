@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% from "bootstrap_WTF.html" import quick_form %}
+{% block title %}Calcule sua dieta{% endblock %}
+
+{% block content %}
+
+<div class="container mt-2 p-4 bg-white text-black rounded border">
+    <h2 class="text-center border-bottom pb-2">Calcule seu gasto diário, água e macronutrientes!</h2>
+    <p class="text-center">Está calculadora cálcula sua <strong>Taxa Metabólica Basal</strong>, uma medida para saber o
+        quanto você gasta de energia por dia! Este também vai
+        mostrar o quanto você precisa de <strong>água e macronutrientes por dia, e também seu Indíce Corporal!</strong>
+    </p>
+
+    {{ quick_form(form, action=url_for('main.calculate'), novalidate=True) }}
+
+    {% if result %}
+    <div class="mt-4">
+        <h3>Resultados</h3>
+        <p>IMC: {{ result['bmi']['index'] }} ({{ result['bmi']['health'] }})</p>
+        <p>Calorias base: {{ result['bmr']['base'] }} kcal</p>
+        <p>Calorias objetivo: {{ result['bmr']['goal'] }} kcal</p>
+        <p>Água: {{ result['water']['ml'] }} ml ({{ result['water']['l'] }} L)</p>
+        <p>Proteínas: {{ result['nutrients']['proteins'] }} g</p>
+        <p>Gorduras: {{ result['nutrients']['fat'] }} g</p>
+        <p>Carbs: {{ result['nutrients']['carbs'] }} g</p>
+    </div>
+    {% endif %}
+</div>
+
+<div class="container mt-5 p-4">
+    <h3>Como é cálculado seu gasto</h3>
+    <p class="small mb-1">Seu gasto diário é uma estimação de quantas calórias você gasta por dia, levando em
+        consideração
+        exercícios físicos. O mesmo é cálculado, descobrindo a sua Taxa Metábolica Basal (TMB), e então, multiplica-se
+        este valor pelo valor de atividade!
+    </p>
+</div>
+{% endblock %}

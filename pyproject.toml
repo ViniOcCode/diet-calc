@@ -1,0 +1,7 @@
+[project]
+name = "diet-calc"
+version = "0.1.0"
+description = "Um site para voce conseguir medir sua dieta diaria"
+readme = "README.md"
+requires-python = ">=3.12.11"
+dependencies = []
