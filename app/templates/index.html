@@ -11,6 +11,10 @@
         mostrar o quanto você precisa de <strong>água e macronutrientes por dia, e também seu Indíce Corporal!</strong>
     </p>
 
+    <div class="alert alert-warning" role="alert">
+        Os resultados são estimativas educacionais e não substituem orientação de nutricionista ou outro profissional de saúde.
+    </div>
+
     {{ quick_form(form, action=url_for('main.calculate'), novalidate=True) }}
 
     {% include 'results.html' %}

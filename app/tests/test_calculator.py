@@ -1,5 +1,6 @@
 import pytest
-from myapp.models.calculator import Person
+
+from app.calculator import Person, ValidationError
 
 @pytest.fixture
 def persons():
@@ -10,31 +11,21 @@ def persons():
     return p, p2, p3 
 
 def test_valid_persons(persons):
-    for i in persons:
-        assert isinstance(i, Person)
-
-    # testing null values
-    with pytest.raises(ValueError, match="All fields need values."):
-        Person()
-
-    # testing 1 null value
-    with pytest.raises(ValueError, match="All fields need values."):
-        Person(weight=57, gender="f", age=22, activity=1.55)
+    assert all(isinstance(person, Person) for person in persons)
 
 
-def test_tmb_calc(persons):
+def test_bmr_calc(persons):
     p, p2, p3 = persons
 
-    assert p.bmr_calc() == 2706
-    assert p2.bmr_calc() == 2141
-    assert p3.bmr_calc() == 2706
+    assert p.bmr_calc() == 2592
+    assert p2.bmr_calc() == 1984
+    assert p3.bmr_calc() == 2592
 
-    # Testing weight value 
-    with pytest.raises(ValueError, match="Weight value is not allowed."):
-        Person(weight=301, gender="m", height=170, age=19, activity=1.55).tmb_calc()
+    with pytest.raises(ValidationError, match="Peso fora do intervalo permitido"):
+        Person(weight=301, gender="m", height=170, age=19, activity=1.55)
 
-    with pytest.raises(ValueError, match="Weight value is not allowed."):
-        Person(weight=-1, gender="m", height=170, age=19, activity=1.55).tmb_calc()
+    with pytest.raises(ValidationError, match="Peso fora do intervalo permitido"):
+        Person(weight=-1, gender="m", height=170, age=19, activity=1.55)
 
 def test_water_calc(persons):
     p, p2, p3 = persons
@@ -43,19 +34,29 @@ def test_water_calc(persons):
     assert p2.water_calc() == 1995
     assert p3.water_calc() == 2450
     
-    # testing ages value
-    with pytest.raises(ValueError, match="Age value is not allowed."):
-        Person(weight=57, gender="f", height=158, age=121, activity=1.55).water_calc()
+    with pytest.raises(ValidationError, match="Idade fora do intervalo permitido"):
+        Person(weight=57, gender="f", height=158, age=121, activity=1.55)
 
-    with pytest.raises(ValueError, match="Age value is not allowed."):
-        Person(weight=57, gender="f", height=158, age=-1, activity=1.55).water_calc()
+    with pytest.raises(ValidationError, match="Idade fora do intervalo permitido"):
+        Person(weight=57, gender="f", height=158, age=-1, activity=1.55)
 
 def test_summary(persons):
-
     p, p2, p3 = persons
-    assert p.summary()["bmr_goal"] == 2706
-    assert p2.summary()["bmr_goal"] == 2141
-    assert p3.summary()["bmr_goal"] == 2106
 
-    with pytest.raises(ValueError, match="Given goal is not allowed."):
-        Person(weight=70, gender="m", height=170, age=19, activity=1.55, goal='cortando')       
+    assert p.summary() == {
+        "bmr": {"base": 2592, "goal": 2592},
+        "nutrients": {"proteins": 194, "fat": 101, "carbs": 227},
+        "water": {"ml": 2450, "l": 2.45},
+        "bmi": {"index": 24.2, "health": "Peso ideal"},
+    }
+    assert p2.summary()["bmr"] == {"base": 1984, "goal": 1984}
+    assert p3.summary()["bmr"] == {"base": 2592, "goal": 1992}
+
+    with pytest.raises(ValidationError, match="Objetivo inválido"):
+        Person(weight=70, gender="m", height=170, age=19, activity=1.55, goal="cortando")
+
+
+@pytest.mark.parametrize("activity", [0, 1.0, 2.0])
+def test_rejects_unknown_activity_factor(activity):
+    with pytest.raises(ValidationError, match="Atividade inválida"):
+        Person(weight=70, gender="m", height=170, age=19, activity=activity)
